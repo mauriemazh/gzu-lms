@@ -1,0 +1,26 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<h1>My Enrollments</h1>
+
+{% if enrollment_list %}
+    <div class="list-group">
+        {% for enrollment in enrollment_list %}
+        <div class="list-group-item">
+            <h5>{{ enrollment.course.title }}</h5>
+            <p class="mb-1">{{ enrollment.course.description|truncatewords:30 }}</p>
+            <small class="text-muted">Enrolled on: {{ enrollment.enrolled_at|date:"M d, Y" }}</small>
+            <div class="mt-2">
+                <a href="{% url 'course_detail' enrollment.course.id %}" class="btn btn-primary btn-sm">View Course</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <h4>No enrollments found.</h4>
+        <p>You haven't enrolled in any courses yet.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Browse Courses</a>
+    </div>
+{% endif %}
+{% endblock %}

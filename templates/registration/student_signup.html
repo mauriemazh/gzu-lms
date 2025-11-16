@@ -1,0 +1,56 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}Student Sign Up - LMS System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header text-center">
+        <h4 class="card-title mb-0">🎓 Student Registration</h4>
+        <p class="text-muted mb-0">Join courses and start learning</p>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Please correct the errors below.
+                </div>
+            {% endif %}
+            
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" id="id_username" required>
+                {% if form.username.errors %}
+                    <div class="text-danger">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Password</label>
+                <input type="password" name="password1" class="form-control" id="id_password1" required>
+                {% if form.password1.errors %}
+                    <div class="text-danger">{{ form.password1.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Confirm Password</label>
+                <input type="password" name="password2" class="form-control" id="id_password2" required>
+                {% if form.password2.errors %}
+                    <div class="text-danger">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-success w-100 btn-lg">
+                🎓 Create Student Account
+            </button>
+        </form>
+        
+        <div class="mt-3 text-center">
+            <p class="mb-1">Are you an instructor? <a href="{% url 'instructor_signup' %}">Instructor Sign Up</a></p>
+            <p class="mb-0">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

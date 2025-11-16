@@ -1,0 +1,38 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>My Dashboard</h1>
+    <span class="badge bg-primary">Student</span>
+</div>
+
+{% if enrollments %}
+    <div class="row">
+        {% for enrollment in enrollments %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ enrollment.course.title }}</h5>
+                    <p class="card-text">{{ enrollment.course.description|truncatewords:20 }}</p>
+                    <p class="text-muted">
+                        <small>Instructor: {{ enrollment.course.instructor.username }}</small><br>
+                        <small>Enrolled: {{ enrollment.enrolled_at|date:"M d, Y" }}</small>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'course_detail' enrollment.course.id %}" class="btn btn-primary btn-sm">View Course</a>
+                    <a href="{% url 'drop_course' enrollment.course.id %}" class="btn btn-outline-danger btn-sm" 
+                       onclick="return confirm('Are you sure you want to drop this course?')">Drop Course</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <h4>You haven't enrolled in any courses yet.</h4>
+        <p>Browse available courses and enroll to get started!</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Browse Courses</a>
+    </div>
+{% endif %}
+{% endblock %}

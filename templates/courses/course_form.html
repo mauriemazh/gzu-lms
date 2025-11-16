@@ -1,0 +1,52 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title mb-0">Create New Course</h2>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Course Title</label>
+                <input type="text" name="title" class="form-control" id="id_title" 
+                       value="{{ form.title.value|default:'' }}" required>
+                {% if form.title.errors %}
+                    <div class="text-danger">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3">
+                <label for="id_description" class="form-label">Description</label>
+                <textarea name="description" class="form-control" id="id_description" 
+                          rows="4" required>{{ form.description.value|default:'' }}</textarea>
+                {% if form.description.errors %}
+                    <div class="text-danger">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3">
+                <label for="id_syllabus" class="form-label">Syllabus (Optional)</label>
+                <textarea name="syllabus" class="form-control" id="id_syllabus" 
+                          rows="6">{{ form.syllabus.value|default:'' }}</textarea>
+                {% if form.syllabus.errors %}
+                    <div class="text-danger">{{ form.syllabus.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3 form-check">
+                <input type="checkbox" name="is_published" class="form-check-input" id="id_is_published"
+                       {% if form.is_published.value %}checked{% endif %}>
+                <label class="form-check-label" for="id_is_published">
+                    Publish this course (make it visible to students)
+                </label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Create Course</button>
+            <a href="{% url 'instructor_dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
